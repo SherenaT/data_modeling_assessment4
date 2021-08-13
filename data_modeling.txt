@@ -1,0 +1,41 @@
+CREATE TABLE users(
+	user_id SERIAL PRIMARY KEY,
+	user_first_name VARCHAR (20),
+	user_last_name VARCHAR (20),
+	user_phone_number VARCHAR (15),
+	user_email_address VARCHAR (50),
+	user_address VARCHAR (75),
+	user_city VARCHAR (20),
+	user_state VARCHAR (3),
+	user_transaction_id_num INT)
+	;
+
+CREATE TABLE employee(
+	employee_id SERIAL PRIMARY KEY,
+	employee_first_name VARCHAR (20),
+	employee_last_name VARCHAR (20),
+	employee_phone_number VARCHAR (15),
+	employee_email_address VARCHAR (50),
+	pet_id INT NOT NULL REFERENCES pet_adoption_info(pet_adoption_info_id ),
+	pet_id INT,
+	employee_transaction_num INT
+	);
+
+CREATE TABLE pet_adoption_info(
+	pet_adoption_info_id SERIAL PRIMARY KEY NOT NULL REFERENCES employee(employee_transaction_num),pet_adoption_info_employer_ID INT NOT NULL REFERENCES employee(employee_id),
+	pet_adoption_info_adopter_ID INT NOT NULL REFERENCES users(user_id),
+	pet_adoption_info_date_pet_arrived_at_shelter TIMESTAMP,
+	pet_adoption_info_date_pet_adopted TIMESTAMP,
+	pet_adoption_info_transaction_id_num INT NOT NULL REFERENCES employee(employee_transaction_num)
+	);
+
+CREATE TABLE pet_information(
+	pet_id INT NOT NULL REFERENCES pet_adoption_info(pet_adoption_info_id),
+	pet_name VARCHAR (20),
+	pet_type VARCHAR (20),
+	pet_breed VARCHAR (30),
+	pet_weight_lb NUMERIC (3),
+	pet_height_in NUMERIC (3),
+	pet_age NUMERIC (3),
+	pet_female BOOLEAN DEFAULT True
+	);
